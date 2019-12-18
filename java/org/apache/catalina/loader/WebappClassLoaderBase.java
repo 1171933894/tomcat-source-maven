@@ -1274,6 +1274,7 @@ public abstract class WebappClassLoaderBase extends URLClassLoader
                 }
             }
 
+            // 判断是否使用delegate时，对于一些容器提供的class，也会跳过
             boolean delegateLoad = delegate || filter(name, true);
 
             // (1) Delegate to our parent if requested

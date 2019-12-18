@@ -91,7 +91,7 @@ public class WebappLoader extends LifecycleMBeanBase
     /**
      * The class loader being managed by this Loader component.
      */
-    private WebappClassLoaderBase classLoader = null;
+    private WebappClassLoaderBase classLoader = null;// 默认使用ParallelWebappClassLoader
 
 
     /**
@@ -119,13 +119,13 @@ public class WebappLoader extends LifecycleMBeanBase
     /**
      * The parent class loader of the class loader we will create.
      */
-    private ClassLoader parentClassLoader = null;
+    private ClassLoader parentClassLoader = null;// 父加载器，默认为 catalina 类加载器
 
 
     /**
      * The reloadable flag for this Loader.
      */
-    private boolean reloadable = false;
+    private boolean reloadable = false;// 是否支持热加载类
 
 
     /**
