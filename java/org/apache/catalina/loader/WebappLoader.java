@@ -112,6 +112,7 @@ public class WebappLoader extends LifecycleMBeanBase
      * This class should extend WebappClassLoaderBase, otherwise, a different
      * loader implementation must be used.
      */
+    // 表示加载器类名 String 类型表示形式
     private String loaderClass = WebappClassLoader.class.getName();
 
 
@@ -389,15 +390,19 @@ public class WebappLoader extends LifecycleMBeanBase
         // Construct a class loader based on our current repositories list
         try {
 
+            // 创建一个类加载器
             classLoader = createClassLoader();
             classLoader.setResources(context.getResources());
             classLoader.setDelegate(this.delegate);
 
+            // 设置库
             // Configure our repositories
             setClassPath();
 
+            // 设置访问权限
             setPermissions();
 
+            // 开启一个新线程用来进行自动重载
             ((Lifecycle) classLoader).start();
 
             String contextName = context.getName();
