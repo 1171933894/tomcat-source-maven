@@ -1788,9 +1788,16 @@ public abstract class WebappClassLoaderBase extends URLClassLoader
         }
     }
 
-
+    /**
+     * 通过 StandardContext 的几个属性来控制是否 clear掉当前应用创建出来的线程
+     * 主要思路:
+     * 首先通过 当前的ThreadGroup来拿到 ThreadGroup来拿到当前Tomcat启动(也就是JVM虚拟机)的所有线程
+     * 拿到之后对比当前 Thread.contextClassLoader 是否就是当前应用的 webappClassLoader, 如果一样, 说明 Thread
+     * 就是当前应用创建出来的线程. 之后 Tomcat 针对 JVM 的线程, Timer线程, JDK线程池 ThreadExecutor中创建的线程等多种类型的线程, 给出其对应的办法
+     */
     @SuppressWarnings("deprecation") // thread.stop()
     private void clearReferencesThreads() {
+        // 1. getThreads 返回的是一个 JVM 实例中所有的线程数, 而我们处理的线程是 由当前 WebappClassLoader 加载出来的 线程
         Thread[] threads = getThreads();
         List<Thread> executorThreadsToStop = new ArrayList<>();
 
@@ -1798,6 +1805,7 @@ public abstract class WebappClassLoaderBase extends URLClassLoader
         for (Thread thread : threads) {
             if (thread != null) {
                 ClassLoader ccl = thread.getContextClassLoader();
+                // 2. 判断当前线程是否是由当前 WebappClassLoader 加载出来的
                 if (ccl == this) {
                     // Don't warn about this thread
                     if (thread == Thread.currentThread()) {
@@ -1808,9 +1816,16 @@ public abstract class WebappClassLoaderBase extends URLClassLoader
 
                     // JVM controlled threads
                     ThreadGroup tg = thread.getThreadGroup();
+                    // 3. 对应 RMI 或 system 的
                     if (tg != null &&
                             JVM_THREAD_GROUP_NAMES.contains(tg.getName())) {
 
+                        /**
+                         * 对于 keeperalive的Timer线程, 应该由
+                         * keeperalive自己的心跳自己结束, 不应该在
+                         * 这里强制关掉, 因此这里将该 Thread 交给
+                         * 其 classloader的上级, 让其自动扫描后关掉
+                         */
                         // HttpClient keep-alive threads
                         if (clearReferencesHttpClientKeepAliveThread &&
                                 threadName.equals("Keep-Alive-Timer")) {
@@ -1824,19 +1839,22 @@ public abstract class WebappClassLoaderBase extends URLClassLoader
                     }
 
                     // Skip threads that have already died
+                    // 若线程已经不存活, 则直接 continue
                     if (!thread.isAlive()) {
                         continue;
-                    }
+                }
 
-                    // TimerThread can be stopped safely so treat separately
-                    // "java.util.TimerThread" in Sun/Oracle JDK
-                    // "java.util.Timer$TimerImpl" in Apache Harmony and in IBM JDK
-                    if (thread.getClass().getName().startsWith("java.util.Timer") &&
-                            clearReferencesStopTimerThreads) {
-                        clearReferencesStopTimerThread(thread);
-                        continue;
-                    }
+                // TimerThread can be stopped safely so treat separately
+                // "java.util.TimerThread" in Sun/Oracle JDK
+                // "java.util.Timer$TimerImpl" in Apache Harmony and in IBM JDK
+                // 定时线程 Timer 通过 反射清空其内部的 queue, 并且调用 cancel 来 stop 掉
+                if (thread.getClass().getName().startsWith("java.util.Timer") &&
+                        clearReferencesStopTimerThreads) {
+                    clearReferencesStopTimerThread(thread);
+                    continue;
+                }
 
+                // 检测是请求线程的话保持不动 (如何判断出来呢, 呵呵 直接通过堆栈信息获取)
                     if (isRequestThread(thread)) {
                         log.warn(sm.getString("webappClassLoader.stackTraceRequestThread",
                                 getContextName(), threadName, getStackTrace(thread)));
@@ -1853,6 +1871,7 @@ public abstract class WebappClassLoaderBase extends URLClassLoader
 
                     // If the thread has been started via an executor, try
                     // shutting down the executor
+                    // 若是通过线程池来启动的线程, 则直接调用线程池的 shutdownNow 来进行停止线程池
                     boolean usingExecutor = false;
                     try {
 

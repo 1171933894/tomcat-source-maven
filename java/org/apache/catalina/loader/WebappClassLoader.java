@@ -18,6 +18,10 @@ package org.apache.catalina.loader;
 
 import org.apache.catalina.LifecycleException;
 
+/**
+ * 每个Context 对应一个 WebappClassloader, 主要用于加载 WEB-INF/lib 与 WEB-INF/classes 下面的资源
+ * WebappClassLoader也实现自Lifecycle接口，在应用关闭时，会触发其stop方法
+ */
 public class WebappClassLoader extends WebappClassLoaderBase {
 
     public WebappClassLoader() {
