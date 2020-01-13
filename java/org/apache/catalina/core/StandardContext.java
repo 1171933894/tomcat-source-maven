@@ -5088,8 +5088,10 @@ public class StandardContext extends ContainerBase
             resourcesStart();
         }
 
+        // 实例化 Loader 实例，它是 tomcat 对于 ClassLoader 的封装，用于支持在运行期间热加载 class
         if (getLoader() == null) {
             WebappLoader webappLoader = new WebappLoader(getParentClassLoader());
+            // 这就是在设置后面Web应用的类查找时是父优先还是子优先
             webappLoader.setDelegate(getDelegate());
             setLoader(webappLoader);
         }

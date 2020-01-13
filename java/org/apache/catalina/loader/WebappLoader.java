@@ -91,7 +91,7 @@ public class WebappLoader extends LifecycleMBeanBase
     /**
      * The class loader being managed by this Loader component.
      */
-    private WebappClassLoaderBase classLoader = null;
+    private WebappClassLoaderBase classLoader = null;// 默认使用ParallelWebappClassLoader
 
 
     /**
@@ -112,19 +112,20 @@ public class WebappLoader extends LifecycleMBeanBase
      * This class should extend WebappClassLoaderBase, otherwise, a different
      * loader implementation must be used.
      */
+    // 表示加载器类名 String 类型表示形式
     private String loaderClass = WebappClassLoader.class.getName();
 
 
     /**
      * The parent class loader of the class loader we will create.
      */
-    private ClassLoader parentClassLoader = null;
+    private ClassLoader parentClassLoader = null;// 父加载器，默认为 catalina 类加载器
 
 
     /**
      * The reloadable flag for this Loader.
      */
-    private boolean reloadable = false;
+    private boolean reloadable = false;// 是否支持热加载类
 
 
     /**
@@ -389,15 +390,19 @@ public class WebappLoader extends LifecycleMBeanBase
         // Construct a class loader based on our current repositories list
         try {
 
+            // 创建一个类加载器
             classLoader = createClassLoader();
             classLoader.setResources(context.getResources());
             classLoader.setDelegate(this.delegate);
 
+            // 设置库
             // Configure our repositories
             setClassPath();
 
+            // 设置访问权限
             setPermissions();
 
+            // 开启一个新线程用来进行自动重载
             ((Lifecycle) classLoader).start();
 
             String contextName = context.getName();

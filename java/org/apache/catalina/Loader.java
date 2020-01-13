@@ -82,6 +82,7 @@ public interface Loader {
      * @return the "follow standard delegation model" flag used to configure
      * our ClassLoader.
      */
+    // 一个加载器的实现可以确定是否委派给父加载器类
     public boolean getDelegate();
 
 
@@ -91,12 +92,14 @@ public interface Loader {
      *
      * @param delegate The new flag
      */
+    // 一个加载器的实现可以确定是否委派给父加载器类
     public void setDelegate(boolean delegate);
 
 
     /**
      * @return the reloadable flag for this Loader.
      */
+    // 用于确定加载器中是否可以使用重加载
     public boolean getReloadable();
 
 
@@ -105,6 +108,7 @@ public interface Loader {
      *
      * @param reloadable The new reloadable flag
      */
+    // 用于确定加载器中是否可以使用重加载
     public void setReloadable(boolean reloadable);
 
 
