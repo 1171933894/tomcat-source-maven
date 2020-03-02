@@ -49,6 +49,28 @@ import java.util.ResourceBundle;
  * @author Mel Martinez [mmartinez@g1440.com]
  * @see java.util.ResourceBundle
  */
+
+/**
+ * Tomcat处理错误消息的方法是将错误消息存储在一个properties文件中，便于读取和编辑。
+ * 但是Tomcat中有几百个类。若是将所有类使用的错误消息都存储在一个大的properties属
+ * 性文件中，并维护这个文件将会是一场噩梦。为了避免这种情况，Tomcat将properties文
+ * 件划分到不同的包中。例如，org.apache.catahna.connector包下的properties属
+ * 性文件包含该包中任何类可能抛出的所有的异常消息。
+ *
+ * 每个properties文件都是用org.apache.tomcat.util.StringManager类的一个实
+ * 例来处理的。当Tomcat运行时·会产生StringManager类的很多实例，每个实例都会读取某
+ * 个包下的指定properties文件。此外，由于Tomcat非常受欢迎，因此对错误消息进行国际
+ * 化处理也是有必要的，当前共有三种语言得到支持。使用英文版错误消息的properties文件
+ * 命名为 LocalStnngs.properties其他两种语言是西班牙语和日语，错误消息文件分别名
+ * 为LocalStringses.properties和LocalStnngs_Ja.properties当包中的某个类
+ * 需要在其包内的properties文件中查找错娱消息时，它会先获取对应的 StringManager实例。
+ * 但是，同一个包下的许多类会使用同一个StringManager实例，若是为每个要查找错误消息的
+ * 对象创建一个StringManger实例是很浪费资源的。因此，设计StringManager类的实例被
+ * 包内所有的对象共享。若你对设计模式比较熟悉的话，你可能已经猜到了，StringManager是
+ * 单例类。StringManager只有一个私有的构造函数，这样就不能在类的外部通过关键字new来
+ * 实例化它了。只能通过调用其公共静态方法getManager()来获得其实例，该方法需要一个指明
+ * 了包名的参数。每个StringManager实例都会以这个包名作为其键，存储在一个Hashtable中。
+ */
 public class StringManager {
 
     private static int LOCALE_CACHE_SIZE = 10;
@@ -237,6 +259,7 @@ public class StringManager {
              * for removal needs to use one less than the maximum desired size
              *
              */
+            // accessOrder值表示：false-基于插入顺序；true-基于访问顺序
             map = new LinkedHashMap<Locale,StringManager>(LOCALE_CACHE_SIZE, 1, true) {
                 private static final long serialVersionUID = 1L;
                 @Override
