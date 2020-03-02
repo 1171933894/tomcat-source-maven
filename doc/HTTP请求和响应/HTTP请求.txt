@@ -1,0 +1,22 @@
+>>HTTP请求
+请求方法一一一统一资源标识符（Uniform Resource Identifier， URI)  协议/版本
+请求头
+实体
+HTTP请求的示例如下所示：
+
+POST 'examples/default. tsp HTTP/1.1
+Accep：text/plain; text/html
+Accept—Language．en —gb
+Connection：Keep—Alive
+Host: localhost
+User—Agent：Mozilla，'．0 (compatible; MSIE．01：Windows 98，
+Content—Length: 33
+Content—Type: application/x—www—form—urlencoded Accept—Encoding: gzip, deflate lastName=Franks& fi
+
+现在请求的第一行，POST /examples/default.jsp HTTP/1.1 其中POST是请求方法，/examples/default.jsp表示URI, HTTP/I.I表明请求使用的协议及其版本。
+URI指定Intemet资源的完整路径。URI通常会被解释为相对于服务器根目录的相对路径。因此，它总是以“ / ”开头的。统一资源定位符(Uniform Resource Locator, URL)实际上是URI的一种类型（参见h师、//w 'ietf.。rg矸c2396．txt）。协议版本指明了当前请求使用的 HTTP协议的版本。
+请求头包含客户端环境和请求实体正文的相关信息。例如，请求头可能会包含浏览器使用的语言，请求实体正文的长度等信息。各个请求头之间用回车/换行(Carriage Return/LineFeed, CRLF)符间隔开。
+在请求头和请求实体正文之间有一个空行，该空行只有C皿F符。这个空行对H啊'P请求格式非常夤要。CRLF告诉HTTP服务器请求实体正文从哪里开始。在有些Internet编程书籍中， CRLF被认为是HTTP请求的第4部分。
+在前面的HTTP请求的示例中，请求实体正文很简单，如下所示：
+lastName=Franks&firstName=Michae1
+当然，在一个典型的HTTP请求中，HTTP请求实体正文也可以很长。

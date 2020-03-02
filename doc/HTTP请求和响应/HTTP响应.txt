@@ -1,0 +1,23 @@
+>>HTTP响应
+与HTTP请求类似，HTTP响应也包括三部分： ·协议一一一状态码一一一描述
+响应头
+响应实体段下面是一个HTTP响应的示例：
+
+HTTP /1·1 200 OK
+ServerMicroso ft—IIS/4.0
+Data：Mon，5 Jan 2 00 13：13：3 3 GMT
+Content—Type: text/html
+Last—Modified: Mon, 5 Jan 200 13：13：12 GMT
+Content—Length：112
+
+<html>
+<head>
+<title>HTTP Response Example</title>
+< /head>
+<body>
+Welcome to Brainy Software
+</bod>
+</html>
+
+HTTP响应头的第一行与HTTP请求头的第一行类似。第一行指明了使用的协议是 HTTP/1.1,请求发送成功（状态码200表示请求成功），一切都正常执行。
+从上面的示例中可以看出，它与请求头类似，响应头也包含了一些有用的信息。响应实体正文是一段HTML代码。响应头和响应实体正文之间由只包含CRLF的一个空行分隔。
