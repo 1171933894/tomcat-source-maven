@@ -89,7 +89,7 @@ public interface ServerSocketFactory {
     Socket acceptSocket(ServerSocket socket) throws IOException;
 
     /**
-     * Triggers the SSL handshake. This will be a no-op for non-SSL sockets.
+     * Triggers the SSL handshake（握手）. This will be a no-op for non-SSL sockets.
      *
      * @exception IOException
      */
