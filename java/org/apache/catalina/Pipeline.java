@@ -62,6 +62,7 @@ public interface Pipeline {
      *
      * @param valve Valve to be distinguished as the basic Valve
      */
+    // 将基础阈设置到管道中
     public void setBasic(Valve valve);
 
 

@@ -76,6 +76,12 @@ import org.apache.juli.logging.Log;
  * @author Craig R. McClanahan
  * @author Remy Maucherat
  */
+/**
+ * 容器可以包含一些支持的组件·如载人器、记录器、管理器、领域和资源等，该接口提供了getter
+ * 和setter方法将这些组件与容器相关联。这些方法包括getLoader()和setLoader(),
+ * getLogger()和setLogger()' getManager() 和setManager(). getRealm()和setRealm()
+ * 以及getResources()和setResources()。
+ */
 public interface Container extends Lifecycle {
 
 
