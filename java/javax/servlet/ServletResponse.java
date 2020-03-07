@@ -29,7 +29,7 @@ import java.util.Locale;
  * {@link ServletOutputStream} returned by {@link #getOutputStream}. To send
  * character data, use the <code>PrintWriter</code> object returned by
  * {@link #getWriter}. To mix binary and text data, for example, to create a
- * multipart response, use a <code>ServletOutputStream</code> and manage the
+ * multipart(多部分) response, use a <code>ServletOutputStream</code> and manage the
  * character sections manually.
  * <p>
  * The charset for the MIME body response can be specified explicitly using the

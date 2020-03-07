@@ -45,14 +45,14 @@ public interface ServletRequest {
      * to make available custom information about a request. For example, for
      * requests made using HTTPS, the attribute
      * <code>javax.servlet.request.X509Certificate</code> can be used to
-     * retrieve information on the certificate of the client. Attributes can
+     * retrieve information on the certificate(证书) of the client. Attributes can
      * also be set programatically using {@link ServletRequest#setAttribute}.
-     * This allows information to be embedded into a request before a
+     * This allows information to be embedded(嵌入式) into a request before a
      * {@link RequestDispatcher} call.
      * <p>
      * Attribute names should follow the same conventions as package names.
      * Names beginning with <code>java.*</code> and <code>javax.*</code> are
-     * reserved for use by the Servlet specification. Names beginning with
+     * reserved(保留) for use by the Servlet specification. Names beginning with
      * <code>sun.*</code>, <code>com.sun.*</code>, <code>oracle.*</code> and
      * <code>com.oracle.*</code>) are reserved for use by Oracle Corporation.
      *
@@ -131,7 +131,7 @@ public interface ServletRequest {
     public String getContentType();
 
     /**
-     * Retrieves the body of the request as binary data using a
+     * Retrieves(检索) the body of the request as binary data using a
      * {@link ServletInputStream}. Either this method or {@link #getReader} may
      * be called to read the body, not both.
      *

@@ -64,7 +64,7 @@ public @interface WebServlet {
     String name() default "";
 
     /**
-     * A convenience method, to allow extremely simple annotation of a class.
+     * A convenience(方便) method, to allow extremely(极) simple annotation of a class.
      *
      * @return array of URL patterns
      * @see #urlPatterns()
@@ -87,7 +87,7 @@ public @interface WebServlet {
     WebInitParam[] initParams() default {};
 
     /**
-     * @return asynchronous operation supported by this Servlet
+     * @return asynchronous（异步） operation supported by this Servlet
      */
     boolean asyncSupported() default false;
 

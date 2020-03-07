@@ -26,7 +26,7 @@ public interface ServletConfig {
 
     /**
      * Returns the name of this servlet instance. The name may be provided via
-     * server administration, assigned in the web application deployment
+     * server administration, assigned(分配) in the web application deployment
      * descriptor, or for an unregistered (and thus unnamed) servlet instance it
      * will be the servlet's class name.
      *
@@ -38,7 +38,7 @@ public interface ServletConfig {
      * Returns a reference to the {@link ServletContext} in which the caller is
      * executing.
      *
-     * @return a {@link ServletContext} object, used by the caller to interact
+     * @return a {@link ServletContext} object, used by the caller to interact(交互)
      *         with its servlet container
      * @see ServletContext
      */

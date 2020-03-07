@@ -49,10 +49,15 @@ import java.io.IOException;
  * <code>getServletConfig</code> method, which the servlet can use to get any
  * startup information, and the <code>getServletInfo</code> method, which allows
  * the servlet to return basic information about itself, such as author,
- * version, and copyright.
+ * version, and copyright（版权）.
  *
  * @see GenericServlet
  * @see javax.servlet.http.HttpServlet
+ */
+
+/**
+ * 由于Servlet不是线程安全的，一个应用程序中所有的用户公用一个Servlet实例，因此不建议使用类
+ * 级别的变量（只使用局部变量最好），除非是只读的或者java.utilconcurrent.atomic包中的成员。
  */
 public interface Servlet {
 
@@ -84,6 +89,12 @@ public interface Servlet {
      *
      * @see UnavailableException
      * @see #getServletConfig
+     */
+    /**
+     * init 第一次请求我们编写的Serlvet时，Servlet容器调用此方法，后续不在调用，
+     * 可以利用这个方法做一些初始化的工作。在调用这个方法时，Servlet容器会传递一个
+     * ServletConfig。一般会将这个ServletConfig赋给一个类级变量，以方便其他方
+     * 法也可以使用这个对象。
      */
     public void init(ServletConfig config) throws ServletException;
 
@@ -145,6 +156,9 @@ public interface Servlet {
      * @exception IOException
      *                if an input or output exception occurs
      */
+    /**
+     * service 每次用户请求service时，servlet容器都会调用这个方法，我们对请求的处理就是在这里完成的。
+     */
     public void service(ServletRequest req, ServletResponse res)
             throws ServletException, IOException;
 
@@ -173,6 +187,10 @@ public interface Servlet {
      * that are being held (for example, memory, file handles, threads) and make
      * sure that any persistent state is synchronized with the servlet's current
      * state in memory.
+     */
+    /**
+     * destroy 要销毁Servlet时，Servlet容器就会调用这个方法，它通常发生在卸载
+     * 应用程序，或者关闭Servlet容器的时候，这里一般我们会写一些资源清理相关的代码。
      */
     public void destroy();
 }

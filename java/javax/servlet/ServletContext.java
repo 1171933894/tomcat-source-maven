@@ -36,7 +36,7 @@ import javax.servlet.descriptor.JspConfigDescriptor;
  * specific subset of the server's URL namespace such as <code>/catalog</code>
  * and possibly installed via a <code>.war</code> file.)
  * <p>
- * In the case of a web application marked "distributed" in its deployment
+ * In the case of a web application marked "distributed"(分布式) in its deployment
  * descriptor, there will be one context instance for each virtual machine. In
  * this situation, the context cannot be used as a location to share global
  * information (because the information won't be truly global). Use an external
@@ -51,6 +51,10 @@ import javax.servlet.descriptor.JspConfigDescriptor;
  */
 public interface ServletContext {
 
+    /**
+     * 每一个servlet上下文都需要一个临时存储目录。Servlet容器必须为每一个servlet上下文提供一个私有的临时目录，
+     * 并且使它可以通过javax.servlet.context.tempdir上下文属性可用。这些属性关联的对象必须是java.io.File类型。
+     */
     public static final String TEMPDIR = "javax.servlet.context.tempdir";
 
     /**
