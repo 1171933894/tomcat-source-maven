@@ -24,13 +24,14 @@ import java.util.Map;
 
 /**
  * Provides a convenient implementation of the ServletRequest interface that can
- * be subclassed by developers wishing to adapt the request to a Servlet. This
+ * be subclassed by developers wishing to adapt(适应) the request to a Servlet. This
  * class implements the Wrapper or Decorator pattern. Methods default to calling
  * through to the wrapped request object.
  *
  * @since Servlet 2.3
  * @see javax.servlet.ServletRequest
  */
+// Wrapper类，其方法都是直接调用 request 来实现
 public class ServletRequestWrapper implements ServletRequest {
     private ServletRequest request;
 

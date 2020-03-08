@@ -27,6 +27,7 @@ import java.util.EventListener;
  * @see HttpSessionEvent
  * @since v 2.3
  */
+// HttpSessionListener是对Session的一个监听，主要监听关于Session的两个事件，即初始化和销毁
 public interface HttpSessionListener extends EventListener {
 
     /**

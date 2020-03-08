@@ -27,6 +27,7 @@ import java.util.EventListener;
  *
  * @since 2.3
  */
+// HttpSessionActivationListener是在对象活化和钝化时时候用（磁盘和内存）
 public interface HttpSessionActivationListener extends EventListener {
 
     /**

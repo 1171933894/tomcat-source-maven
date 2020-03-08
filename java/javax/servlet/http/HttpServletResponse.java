@@ -23,7 +23,7 @@ import javax.servlet.ServletResponse;
 
 /**
  * Extends the {@link ServletResponse} interface to provide HTTP-specific
- * functionality in sending a response. For example, it has methods to access
+ * functionality in sending a response. For example, it has methods to access(访问)
  * HTTP headers and cookies.
  * <p>
  * The servlet container creates an <code>HttpServletResponse</code> object and

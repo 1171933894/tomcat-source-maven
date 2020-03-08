@@ -24,6 +24,7 @@ import java.util.EventListener;
  *
  * @since v 2.3
  */
+// HttpSessionAttributeListener是SessionAttribute的监听，当在会话对象中加入属性、移除属性或替换属性时，就会调用HttpSessionAttributeListener监听器
 public interface HttpSessionAttributeListener extends EventListener {
 
     /**

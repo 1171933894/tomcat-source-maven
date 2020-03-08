@@ -45,7 +45,7 @@ public abstract class ServletInputStream extends InputStream {
 
     /**
      * Reads the input stream, one line at a time. Starting at an offset, reads
-     * bytes into an array, until it reads a certain number of bytes or reaches
+     * bytes into an array, until it reads a certain（某些） number of bytes or reaches
      * a newline character, which it reads into the array as well.
      * <p>
      * This method returns -1 if it reaches the end of the input stream before

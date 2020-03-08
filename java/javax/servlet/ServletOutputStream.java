@@ -67,7 +67,7 @@ public abstract class ServletOutputStream extends OutputStream {
             // servlet framework. It must suffice until servlet output
             // streams properly encode their output.
             //
-            if ((c & 0xff00) != 0) { // high order byte must be zero
+            if ((c & 0xff00) != 0) { // high order byte must be zero // 高阶字节必须为零
                 String errMsg = lStrings.getString("err.not_iso8859_1");
                 Object[] errArgs = new Object[1];
                 errArgs[0] = Character.valueOf(c);
