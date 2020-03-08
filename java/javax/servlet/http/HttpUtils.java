@@ -58,7 +58,7 @@ public class HttpUtils {
      * should have key-value pairs in the form <i>key=value</i>,
      * with each pair separated from the next by a &amp; character.
      *
-     * <p>A key can appear more than once in the query string
+     * <p>A key can appear（出现） more than once in the query string
      * with different values. However, the key appears only once in
      * the hashtable, with its value being
      * an array of strings containing the multiple values sent
