@@ -74,6 +74,9 @@ public class Cookie implements Cloneable, Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 一个是Cookie的名字，一个是它的值，名字可以重复，值必须唯一
+     */
     private final String name;
     private String value;
 
@@ -82,11 +85,17 @@ public class Cookie implements Cloneable, Serializable {
     //
     // Attributes encoded in the header's cookie fields.
     //
+    // 浏览器显示这个Cookie的时候显示出来的对这个Cookie的意义的说明
     private String comment; // ;Comment=VALUE ... describes cookie's use
+    // 指定关联的WEB服务器域名
     private String domain; // ;Domain=VALUE ... domain that sees cookie
+    // 最大生命周期。整数，单位为秒，设置这个Cookie的过期时间。如果为负数则关闭浏览器失效，本地不保存。
     private int maxAge = -1; // ;Max-Age=VALUE ... cookies auto-expire
+    // 指明Cookie对应的页面（通常是一个目录），这个目录的子页面都可以访问这个Cookie，其他则不能访问，如果要设置为全局可以访问的，则设置为/
     private String path; // ;Path=VALUE ... URLs that see the cookie
+    // 指定是否安全传输数据，或者为空或者为secure，如果是空用不安全的http，如果是secure用https或者别的加密方式。这个只是加密传输的内容而不是本地保存的Cookie。
     private boolean secure; // ;Secure ... e.g. use SSL
+    // cookie的httponly属性。若此属性为true，则只有在http请求头中会带有此cookie的信息，而不能通过document.cookie来访问此cookie
     private boolean httpOnly; // Not in cookie specs, but supported by browsers
 
     /**
@@ -117,6 +126,7 @@ public class Cookie implements Cloneable, Serializable {
      * @see #setVersion
      */
     public Cookie(String name, String value) {
+        // 检查名字的合法性，然后注入
         validation.validate(name);
         this.name = name;
         this.value = value;
@@ -382,13 +392,13 @@ public class Cookie implements Cloneable, Serializable {
 }
 
 
-class CookieNameValidator {
+class CookieNameValidator {// 有效判断器的基类，基本不用这个
     private static final String LSTRING_FILE = "javax.servlet.http.LocalStrings";
     protected static final ResourceBundle lStrings = ResourceBundle.getBundle(LSTRING_FILE);
 
-    protected final BitSet allowed;
+    protected final BitSet allowed;// 实现对可取字符区间的控制，其作用原理比较简单：在一个范围内用比特位表示是否有效。
 
-    protected CookieNameValidator(String separators) {
+    protected CookieNameValidator(String separators) {// 构造函数输入一个字符集，这个字符集里面的字符都被作为非法字符对待
         allowed = new BitSet(128);
         allowed.set(0x20, 0x7f); // any CHAR except CTLs or separators
         for (int i = 0; i < separators.length(); i++) {
@@ -397,11 +407,11 @@ class CookieNameValidator {
         }
     }
 
-    void validate(String name) {
+    void validate(String name) {// 判断一个那么是否合法
         if (name == null || name.length() == 0) {
             throw new IllegalArgumentException(lStrings.getString("err.cookie_name_blank"));
         }
-        if (!isToken(name)) {
+        if (!isToken(name)) {// 调用isToken进行判断。isToken负责判断这个name里面是否包含非法字符，如果有则抛出异常
             String errMsg = lStrings.getString("err.cookie_name_is_token");
             throw new IllegalArgumentException(MessageFormat.format(errMsg, name));
         }
@@ -412,7 +422,7 @@ class CookieNameValidator {
 
         for (int i = 0; i < len; i++) {
             char c = possibleToken.charAt(i);
-            if (!allowed.get(c)) {
+            if (!allowed.get(c)) {// 把这个字符串的每一个字符拿出来和有效字符集合（上文中的BitSet）进行判断，如果发现一个无效字符则整个字符串无效
                 return false;
             }
         }
@@ -424,15 +434,15 @@ class NetscapeValidator extends CookieNameValidator {
     // the Netscape specification describes NAME=VALUE as
     // "a sequence of characters excluding semi-colon, comma and white space"
     // we also exclude the '=' character that separates NAME from VALUE
-    private static final String NETSCAPE_SEPARATORS = ",; " + "=";
+    private static final String NETSCAPE_SEPARATORS = ",; " + "=";// 等于把这些字符也当做非法字
 
     NetscapeValidator() {
         super(NETSCAPE_SEPARATORS);
-    }
+    }// 通过父类的构造方法传入更多的非法字符，让判断更严格。
 }
 
 class RFC6265Validator extends CookieNameValidator {
-    private static final String RFC2616_SEPARATORS = "()<>@,;:\\\"/[]?={} \t";
+    private static final String RFC2616_SEPARATORS = "()<>@,;:\\\"/[]?={} \t";// 更加多的非法字符，更加严格的名字检查
 
     RFC6265Validator() {
         super(RFC2616_SEPARATORS);
@@ -458,7 +468,7 @@ class RFC2109Validator extends RFC6265Validator {
     @Override
     void validate(String name) {
         super.validate(name);
-        if (name.charAt(0) == '$') {
+        if (name.charAt(0) == '$') {// 更加严格，避免以$开头的String作为名字
             String errMsg = lStrings.getString("err.cookie_name_is_token");
             throw new IllegalArgumentException(MessageFormat.format(errMsg, name));
         }

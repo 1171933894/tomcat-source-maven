@@ -34,26 +34,32 @@ import javax.servlet.ServletRequest;
  */
 public interface HttpServletRequest extends ServletRequest {
 
+    // -------------------------------------------------------- 认证信息
+
     /**
      * String identifier for Basic authentication. Value "BASIC"
+     * 用于基本身份验证的字符串标识符。“基本”BASIC
      */
     public static final String BASIC_AUTH = "BASIC";
     /**
      * String identifier for Form authentication. Value "FORM"
+     * 用于表单身份验证的字符串标识符。值“FORM”
      */
     public static final String FORM_AUTH = "FORM";
     /**
      * String identifier for Client Certificate authentication. Value
      * "CLIENT_CERT"
+     * 用于客户端证书身份验证的字符串标识符。
      */
     public static final String CLIENT_CERT_AUTH = "CLIENT_CERT";
     /**
      * String identifier for Digest authentication. Value "DIGEST"
+     * 用于摘要身份验证的字符串标识符。值“DIGEST”
      */
     public static final String DIGEST_AUTH = "DIGEST";
 
-    /**
-     * Returns the name of the authentication scheme used to protect the
+     /**
+     * Returns the name of the authentication scheme(计划) used to protect the
      * servlet. All servlet containers support basic, form and client
      * certificate authentication, and may additionally support digest
      * authentication. If the servlet is not authenticated <code>null</code> is
@@ -72,6 +78,8 @@ public interface HttpServletRequest extends ServletRequest {
      * Returns an array containing all of the <code>Cookie</code> objects the
      * client sent with this request. This method returns <code>null</code> if
      * no cookies were sent.
+     *
+     * 返回一个数组，其中包含与此请求一起发送的所有<code>Cookie</code>对象。如果没有发送cookie，此方法返回<code>null</code>。
      *
      * @return an array of all the <code>Cookies</code> included with this
      *         request, or <code>null</code> if the request has no cookies
@@ -181,7 +189,7 @@ public interface HttpServletRequest extends ServletRequest {
     public String getMethod();
 
     /**
-     * Returns any extra path information associated with the URL the client
+     * Returns any extra（额外的） path information associated with the URL the client
      * sent when it made this request. The extra path information follows the
      * servlet path but precedes the query string and will start with a "/"
      * character.

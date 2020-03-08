@@ -74,6 +74,7 @@ public interface HttpSession {
      * @exception IllegalStateException
      *                if this method is called on an invalidated session
      */
+    // 返回session创建时间
     public long getCreationTime();
 
     /**
@@ -85,6 +86,7 @@ public interface HttpSession {
      * @exception IllegalStateException
      *                if this method is called on an invalidated session
      */
+    // 返回sessionId，Id由服务器自动创建，不会重复
     public String getId();
 
     /**
@@ -101,6 +103,7 @@ public interface HttpSession {
      * @exception IllegalStateException
      *                if this method is called on an invalidated session
      */
+    // 返回session最后一次活跃的时间
     public long getLastAccessedTime();
 
     /**
@@ -119,6 +122,7 @@ public interface HttpSession {
      * @param interval
      *            An integer specifying the number of seconds
      */
+    // 设置session超时时间
     public void setMaxInactiveInterval(int interval);
 
     /**
@@ -155,6 +159,7 @@ public interface HttpSession {
      * @exception IllegalStateException
      *                if this method is called on an invalidated session
      */
+    // 获取session属性
     public Object getAttribute(String name);
 
     /**
@@ -179,6 +184,7 @@ public interface HttpSession {
      * @exception IllegalStateException
      *                if this method is called on an invalidated session
      */
+    // 返回session中存在的属性名
     public Enumeration<String> getAttributeNames();
 
     /**
@@ -217,6 +223,7 @@ public interface HttpSession {
      * @exception IllegalStateException
      *                if this method is called on an invalidated session
      */
+    // 设置session的属性
     public void setAttribute(String name, Object value);
 
     /**
@@ -249,6 +256,7 @@ public interface HttpSession {
      * @exception IllegalStateException
      *                if this method is called on an invalidated session
      */
+    // 移除session属性
     public void removeAttribute(String name);
 
     /**
@@ -269,6 +277,7 @@ public interface HttpSession {
      * @exception IllegalStateException
      *                if this method is called on an already invalidated session
      */
+    // 设置失效
     public void invalidate();
 
     /**
@@ -282,5 +291,6 @@ public interface HttpSession {
      * @exception IllegalStateException
      *                if this method is called on an already invalidated session
      */
+    // 是否是新建的
     public boolean isNew();
 }
