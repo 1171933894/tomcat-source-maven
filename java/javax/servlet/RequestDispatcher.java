@@ -26,13 +26,22 @@ import java.io.IOException;
  * given by a particular name.
  *
  * <p>
- * This interface is intended to wrap servlets, but a servlet container can
+ * This interface is intended(目的) to wrap servlets, but a servlet container can
  * create <code>RequestDispatcher</code> objects to wrap any type of resource.
  *
  * @see ServletContext#getRequestDispatcher(java.lang.String)
  * @see ServletContext#getNamedDispatcher(java.lang.String)
  * @see ServletRequest#getRequestDispatcher(java.lang.String)
  *
+ */
+
+/**
+ * 调度客户端请求并响应对应资源
+ * servlet容器创建RequestDispatcher对象，该对象是请求资源（访问路径和名称）的包装器
+ *
+ * forward()与include()区别：
+ * 		forward()：请求转发给另一个servlet，并响应该servlet对应资源；
+ *      include()：另一个servlet资源包含到当前请求servlet中，资源添加到响应体中。
  */
 public interface RequestDispatcher {
 
@@ -254,6 +263,7 @@ public interface RequestDispatcher {
      * @exception IllegalStateException
      *                if the response was already committed
      */
+    // 转发请求并响应
     public void forward(ServletRequest request, ServletResponse response)
             throws ServletException, IOException;
 
@@ -288,6 +298,7 @@ public interface RequestDispatcher {
      * @exception IOException
      *                if the included resource throws this exception
      */
+    // 另一个servlet处理过后的内容包含到响应体内
     public void include(ServletRequest request, ServletResponse response)
             throws ServletException, IOException;
 }

@@ -35,6 +35,7 @@ public interface FilterConfig {
      * @return The filter-name of this filter as defined in the deployment
      *         descriptor.
      */
+    // 获取过滤器名称
     public String getFilterName();
 
     /**
@@ -46,6 +47,7 @@ public interface FilterConfig {
      *
      * @see ServletContext
      */
+    // 获取关联的ServletContext
     public ServletContext getServletContext();
 
     /**
@@ -60,6 +62,7 @@ public interface FilterConfig {
      * @return <code>String</code> containing the value of the initialization
      *         parameter
      */
+    // 获取指定名称的初始化参数
     public String getInitParameter(String name);
 
     /**
@@ -70,6 +73,7 @@ public interface FilterConfig {
      * @return <code>Enumeration</code> of <code>String</code> objects
      *         containing the names of the filter's initialization parameters
      */
+    // 获取初始化参数名称集合
     public Enumeration<String> getInitParameterNames();
 
 }

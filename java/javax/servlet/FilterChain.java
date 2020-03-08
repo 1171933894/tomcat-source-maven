@@ -28,7 +28,6 @@ import java.io.IOException;
  * @see Filter
  * @since Servlet 2.3
  **/
-
 public interface FilterChain {
 
     /**
@@ -47,6 +46,7 @@ public interface FilterChain {
 
      * @since 2.3
      */
+    // 用引用链的下一个filter或最终servlet服务
     public void doFilter(ServletRequest request, ServletResponse response)
             throws IOException, ServletException;
 

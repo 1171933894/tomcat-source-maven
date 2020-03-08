@@ -19,12 +19,12 @@ package javax.servlet;
 import java.io.IOException;
 
 /**
- * A filter is an object that performs filtering tasks on either the request to
+ * A filter is an object that performs(执行) filtering tasks on either the request to
  * a resource (a servlet or static content), or on the response from a resource,
  * or both. <br>
  * <br>
  * Filters perform filtering in the <code>doFilter</code> method. Every Filter
- * has access to a FilterConfig object from which it can obtain its
+ * has access to a FilterConfig object from which it can obtain(获得) its
  * initialization parameters, a reference to the ServletContext which it can
  * use, for example, to load resources needed for filtering tasks.
  * <p>
@@ -43,6 +43,7 @@ import java.io.IOException;
  *
  * @since Servlet 2.3
  */
+// Filter过滤器是实现特殊接口的java类，由servlet容器调用执行，可用于权限过滤、日志记录、图片转换、加密、数据压缩等操作
 public interface Filter {
 
     /**
@@ -64,6 +65,9 @@ public interface Filter {
      *
      * @throws ServletException if the initialisation fails
      */
+    //初始化方法，容器创建Filter对象后，立即调用init方法，整个生命周期中只执行一次。
+    //在init方法成功(失败如抛异常等)执行完前，不能提供过滤服务。
+    //参数FilterConfig用于获取初始化参数
     public void init(FilterConfig filterConfig) throws ServletException;
 
     /**
@@ -97,6 +101,8 @@ public interface Filter {
      *                     processing of the request
      * @throws ServletException if the processing fails for any other reason
      */
+    //执行过滤任务的方法，参数FilterChain表示Filter链，doFilter方法中只有执行FilterChain只有执行了doFilter方法，
+    //才能将请求交经下一个Filter或Servlet执行
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException;
 
@@ -113,6 +119,8 @@ public interface Filter {
      * sure that any persistent state is synchronized with the filter's current
      * state in memory.
      */
+    //销毁方法，当移出服务时由web容器调用。整个生命周期中destroy方法只会执行一次
+    //destroy方法可用于释放持有的资源，如内存、文件句柄等
     public void destroy();
 
 }
