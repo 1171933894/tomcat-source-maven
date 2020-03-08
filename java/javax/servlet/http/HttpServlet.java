@@ -35,7 +35,7 @@ import javax.servlet.ServletResponse;
 
 /**
  * Provides an abstract class to be subclassed to create
- * an HTTP servlet suitable for a Web site. A subclass of
+ * an HTTP servlet suitable（合适的） for a Web site. A subclass of
  * <code>HttpServlet</code> must override at least
  * one method, usually one of these:
  *
@@ -56,7 +56,7 @@ import javax.servlet.ServletResponse;
  * for each HTTP request type (the <code>do</code><i>Method</i>
  * methods listed above).
  *
- * <p>Likewise, there's almost no reason to override the
+ * <p>Likewise（同样的）, there's almost no reason to override the
  * <code>doOptions</code> and <code>doTrace</code> methods.
  *
  * <p>Servlets typically run on multithreaded servers,
@@ -68,8 +68,21 @@ import javax.servlet.ServletResponse;
  * connections.
  * See the
  * <a href="http://java.sun.com/Series/Tutorial/java/threads/multithreaded.html">
- * Java Tutorial on Multithreaded Programming</a> for more
+ * Java Tutorial（教程） on Multithreaded Programming</a> for more
  * information on handling multiple threads in a Java program.
+ */
+
+/**
+ * GET通过请求URI得到资源
+ * POST用于添加新的内容
+ * PUT用于修改某个内容
+ * DELETE,删除某个内容
+ * CONNECT用于代理进行传输，如使用SSL
+ * OPTIONS询问可以执行哪些方法
+ * PATCH部分文档更改
+ * RACE用于远程诊断服务器
+ * HEAD类似于GET, 但是不返回body信息，用于检查对象是否存在，以及得到对象的元数据
+ * TRACE用于远程诊断服务器
  */
 public abstract class HttpServlet extends GenericServlet {
 
@@ -184,7 +197,7 @@ public abstract class HttpServlet extends GenericServlet {
      * If the time is unknown, this method returns a negative
      * number (the default).
      *
-     * <p>Servlets that support HTTP GET requests and can quickly determine
+     * <p>Servlets that support HTTP GET requests and can quickly determine（确定）
      * their last modification time should override this method.
      * This makes browser and proxy caches work more effectively,
      * reducing the load on server and network resources.
@@ -612,7 +625,7 @@ public abstract class HttpServlet extends GenericServlet {
     protected void service(HttpServletRequest req, HttpServletResponse resp)
         throws ServletException, IOException {
 
-        String method = req.getMethod();
+        String method = req.getMethod();// 获取请求头部
 
         if (method.equals(METHOD_GET)) {
             long lastModified = getLastModified(req);
@@ -726,6 +739,7 @@ public abstract class HttpServlet extends GenericServlet {
         } catch (ClassCastException e) {
             throw new ServletException("non-HTTP request or response");
         }
+        // service方法，请求来了先执行这个方法，然后通过请求头，去分别判断执行那个具体方法
         service(request, response);
     }
 }
